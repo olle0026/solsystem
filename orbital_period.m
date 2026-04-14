@@ -23,6 +23,7 @@ end
 %Searches for index when y changes from non-positive to positive
 j = 1;
 found = false;
+length(y)
 for i = 1:length(y)-1
     
     if y(i) <= 0 && y(i+1)>0
@@ -43,6 +44,8 @@ end
 %Calculate period by x-data and y-data
 for i = 1:length(ix)-1
     tempx(i) = t(ix(i+1))-t(ix(i));
+end
+for i = 1:length(iy)-1
     tempy(i) = t(iy(i+1)) - t(iy(i));
 end
 

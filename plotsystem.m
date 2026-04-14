@@ -36,5 +36,3 @@ hold on
 plot(x(:,2),y(:,2),"r--")
 plot(x(:,3),y(:,3),"b--")
 legend("star","planet 1","planet 2")
-
-

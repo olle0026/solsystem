@@ -1,82 +1,171 @@
-clear
+%Approximate heliocentric initial conditions
+%All planets projected into one XY plane (z ignored)
+%Units:
+%mass = 1e23 kg
+%position = km
+%velocity = km/h
+%time = hours
+%Order: Sun Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune
 
-%Data
-m = 0.01;
-M = 10;
-G = 1;
-x0 = 10;
-y0 = 0;
-vx0 = 0;
-vy0 = 0.75;
+m = [ ...
+1.9885e7,...
+3.3011,...
+4.8675e1,...
+5.9724e1,...
+6.4171,...
+1.8982e4,...
+5.6834e3,...
+8.6810e2,...
+1.0241e3];
+
+%Use real gravitational constant in km^3/(kg*h^2) multiplied by mass
+%scalar
+G = 8.6498928e-13 * 1e23;
+
+%Sun at origo
+%x0 - semimajor axis
+
+x0 = [ ...
+0,...
+5.79e7,...
+1.082e8,...
+1.496e8,...
+2.279e8,...
+7.785e8,...
+1.433e9,...
+2.872e9,...
+4.495e9];
+
+y0 = [ ...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0];
+
+vx0 = [ ...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0,...
+0];
+
+%Circular orbit approximation: v = sqrt(G*M_sun/r)
+%Direction chosen +y when on +x axis
+
+vy0 = [ ...
+0,...
+1.706e5,...
+1.260e5,...
+1.073e5,...
+8.688e4,...
+4.707e4,...
+3.484e4,...
+2.441e4,...
+1.954e4];
+
+%Real orbital period for planets
+T = [ ...
+2111.3,...
+5392.8,...
+8766.0,...
+16486.8,...
+103981.2,...
+258585.6,...
+736519.2,...
+144427.2e1];
 
 %Simulation time
-tmax = 200;
-dt = 0.1;
-
-%Amount of ploted vectors
-simplifiedsize = 100;
-arrow_factor = (tmax/dt)/simplifiedsize;
+tmax = 3e6; %around two neptune years in earth hours
+dt = 100;
 
 %Simulate orbit
-[x, y, vx, vy , ax, ay, t] = orbit_1body(G, M, x0, y0, vx0, vy0, dt, tmax);
+[x, y, vx, vy , ax, ay, t] = orbit_Nbody(G,m,x0,y0,vx0,vy0,dt,tmax);
 
-%Create vectors for arrows
-simplifiedx = zeros(simplifiedsize, 1);
-simplifiedy = zeros(simplifiedsize, 1);
-simplifiedvx = zeros(simplifiedsize, 1);
-simplifiedvy = zeros(simplifiedsize, 1);
-simplifiedax = zeros(simplifiedsize, 1);
-simplifieday = zeros(simplifiedsize, 1);
+orbital_periods = zeros(1,length(m)-1);
+error = zeros(size(orbital_periods));
 
-for i = 1:simplifiedsize
-    old = arrow_factor * (i-1) + 1;
-    simplifiedx(i) = x(old);
-    simplifiedy(i) = y(old);
-    simplifiedvx(i) = vx(old);
-    simplifiedvy(i) = vy(old);
-    simplifiedax(i) = ax(old);
-    simplifieday(i) = ay(old);
+for i = 1:8
+    orbital_periods(i) = orbital_period(x(:,i+1),y(:,i+1),t); 
+    error(i) = (T(i) - orbital_periods(i))/T(i); 
 end
 
-%Calculate Mass centrum location
-mcentrumx = (m/(m+M)).*x;
-mcentrumy = (m/(m+M)).*y;
-
-%Calculate Energy and Momentum
-rnorm = sqrt(x.^2 + y.^2);
-vnorm = sqrt(vx.^2+ vy.^2);
-Ek = (m*vnorm.^2)./2;
-Ep = (-G.*M.*m)./rnorm;
-p = m*vnorm;
-
-%Plot Orbit
+%Plot every single orbit 
 figure
-axis equal
-plot(x, y)
+title ("mercury")
+plot(x(:,1),y(:,1),"p");
 hold on
-plot(mcentrumx, mcentrumy)
-quiver(simplifiedx, simplifiedy, simplifiedvx, simplifiedvy)
-quiver(simplifiedx, simplifiedy, simplifiedax, simplifieday)
-
-%Plot Energy and Momentum
-figure
-plot(t, Ek)
-xlabel("Time")
-ylabel("Kinetic energy")
+plot(x(:,2),y(:,2),"b")
+legend("Sun","mercury")
 
 figure
-plot(t, Ep)
-xlabel("Time")
-ylabel("Potential energy")
+title ("venus")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,3),y(:,3),"y")
+legend("Sun","venus")
 
 figure
-plot(t, Ek + Ep)
-xlabel("Time")
-ylabel("Total energy")
+title ("earth")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,4),y(:,4),"g")
+legend("Sun","earth")
 
 figure
-plot(t,p)
-xlabel("Time")
-ylabel("Momentum")
+title ("mars")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,5),y(:,5),"r")
+legend("Sun","mars")
 
-period = orbital_period(x,y,t)
+figure
+title ("yupiter")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,6),y(:,6),"k")
+legend("Sun","yupiter")
+
+figure
+title ("saturn")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,7),y(:,7),"y")
+legend("Sun","saturn")
+
+figure
+title ("uranus")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,8),y(:,8),"b")
+legend("Sun","uranus")
+
+figure
+title ("neptune")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,9),y(:,9),"c")
+legend("Sun","neptune")
+
+%Plot solar system
+figure
+title ("solar system")
+plot(x(:,1),y(:,1),"p");
+hold on
+plot(x(:,2),y(:,2),"b")
+plot(x(:,3),y(:,3),"r")
+plot(x(:,4),y(:,4),"g")
+plot(x(:,5),y(:,5),"r")
+plot(x(:,6),y(:,6),"k")
+plot(x(:,7),y(:,7),"y")
+plot(x(:,8),y(:,8),"b")
+plot(x(:,9),y(:,9),"c")
+legend("Sun","mercury","venus","earth","mars","yupiter","saturn","uranus","neptune")

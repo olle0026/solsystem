@@ -10,7 +10,7 @@ function [x,y,vx,vy,ax,ay,t]=orbit_Nbody(G,m,x0,y0,vx0,vy0,dt,tmax)
     vy = zeros(steps, N);
     ax = zeros(steps, N);
     ay = zeros(steps, N);
-    t = zeros(steps);
+    t = zeros(steps,1);
     %set initial conditions
     x(1,:) = x0;
     y(1,:) = y0;
