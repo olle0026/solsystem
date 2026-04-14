@@ -1,5 +1,6 @@
 clear
 
+%Data
 m = 0.01;
 M = 10;
 G = 1;
@@ -7,8 +8,12 @@ x0 = 10;
 y0 = 0;
 vx0 = 0;
 vy0 = 0.75;
+
+%Simulation time
 tmax = 200;
 dt = 0.1;
+
+%Amount of ploted vectors
 simplifiedsize = 100;
 arrow_factor = (tmax/dt)/simplifiedsize;
 
@@ -73,3 +78,5 @@ figure
 plot(t,p)
 xlabel("Time")
 ylabel("Momentum")
+
+period = orbital_period(x,y,t)
