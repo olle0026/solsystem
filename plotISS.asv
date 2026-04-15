@@ -46,6 +46,6 @@ plot(x, y)
 hold on
 quiver(simplifiedx, simplifiedy, simplifiedvx, simplifiedvy)
 quiver(simplifiedx, simplifiedy, simplifiedax, simplifieday)
-legend("ISS orbit", "Velocity", "Acceleration")
+legend("ISS orbit", "Mass centrum", "Velocity", "Acceleration")
 
 period = orbital_period(x,y,t)
