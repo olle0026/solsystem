@@ -27,6 +27,7 @@ Ek = (m.*vnorm.^2)./2;
 Ep = -(G.*m.*M)./rnorm;
 px = m.*vx;
 py = m.*vy;
+pnorm = sqrt(px.^2+py.^2);
 
 %Calculate mass centrum
 mx = (m.*x)./(m+M);
