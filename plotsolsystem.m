@@ -173,3 +173,5 @@ plot(x(:,7),y(:,7),"y")
 plot(x(:,8),y(:,8),"b")
 plot(x(:,9),y(:,9),"c")
 legend("Sun","mercury","venus","earth","mars","yupiter","saturn","uranus","neptune")
+
+error
