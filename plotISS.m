@@ -4,14 +4,14 @@ clear
 m = 4.5e+5;
 M = 5.972e+24;
 G = 6.674e-11;
-x0 = 4e5;
+x0 = 4e5 + 6.371e6;
 y0 = 0;
 vx0 = 0;
 vy0 = 7.7e3;
 
 %Simulation time
-tmax = 200;
-dt = 0.001;
+tmax = 20000;
+dt = 1;
 
 %Amount of ploted vectors
 simplifiedsize = 100;
