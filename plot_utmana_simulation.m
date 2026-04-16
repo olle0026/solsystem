@@ -10,7 +10,7 @@
 m = [ ...
 25,...
 10,...
-20];
+20.81];
 
 %Use real gravitational constant in km^3/(kg*h^2) multiplied by mass
 %scalar
@@ -46,7 +46,7 @@ vy0 = [ ...
 
 
 %Simulation time
-tmax = 1000; %around two neptune years in earth hours
+tmax = 2000; %around two neptune years in earth hours
 dt = 1;
 
 %Simulate orbit
