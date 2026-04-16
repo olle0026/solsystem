@@ -30,3 +30,7 @@
 
 "plotISS.m added" - *plotISS.m* added<br />
 *plotISS.m* - illustrate the orbit of the ISS space station
+
+"orbital_period.m uppdate to 2.0" - *orbital_period.m* rewritten, *plotsolsystem.m* minor changes<br />
+*orbital_period.m* - uses only y not x<br />
+*plotsolsystem.m* - error output at the end added
