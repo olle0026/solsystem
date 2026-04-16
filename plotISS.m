@@ -1,4 +1,4 @@
-clear
+ clear
 
 %Data
 m = 4.5e+5;
